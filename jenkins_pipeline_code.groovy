@@ -1,4 +1,5 @@
 node {
+    puppet.credentials 'puppet-access-token'
     def mvnHome
     stage('Preparation') { // for display purposes
         git 'git@gitlab.inf.puppet.vm:puppet/ContinuousIntegrationAndContinuousDeliveryApp.git'
@@ -52,6 +53,7 @@ node {
         } 
     }
     stage('Post') {
+      puppet.job 'production', query: 'nodes { certname = "centos-7-2.pdx.puppet.vm" }'        
       gitlabCommitStatus {
         sh 'echo "Post"'
       }          

@@ -1,0 +1,2 @@
+expose: 8090
+image_name: maju6406/jenkins-docker-webapp
