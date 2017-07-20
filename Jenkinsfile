@@ -46,7 +46,6 @@ node {
             sh   '/var/lib/jenkins/workspace/Pipeline/runDeployment.sh'
             gitlabCommitStatus {
               sh 'echo "Deployment"'
-              sh 'echo "All is well! Your code is tested,built,and deployed: Job ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL} "'  
             }              
         }catch (e) {
             notifyStarted("Deployment Failed in Jenkins!")
