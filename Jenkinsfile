@@ -33,6 +33,7 @@ node {
     stage('Results') {
         try{
             archive 'target/*.jar'
+            sh "/usr/local/bin/fpm -s dir -t rpm -n helloworldjavaapp -v 0.0.7 /var/lib/jenkins/workspace/Pipeline/target/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar=/opt/helloworldjavaapp/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar /var/lib/jenkins/workspace/Pipeline/target/helloworldjavaapp.service=/usr/lib/systemd/system/helloworldjavaapp.service"
             gitlabCommitStatus {
               sh 'echo "Results"'
             }             
