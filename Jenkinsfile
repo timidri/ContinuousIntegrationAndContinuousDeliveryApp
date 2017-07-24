@@ -47,7 +47,7 @@ node {
     stage('Deployment') {
         try{
             // Run Puppet on test machine to get latest code
-            sh 'source /var/lib/jenkins/.openstack_snapshotrc;nova rebuild --poll "895e732e-3f32-4d6c-8cc2-481f6bf03f78" "f2fe45bc-fcbb-4637-be3d-301bcce87e80"'
+            sh 'source /var/lib/jenkins/.openstack_snapshotrc;nova rebuild --poll "895e732e-3f32-4d6c-8cc2-481f6bf03f78" "d9553b4f-b4f8-483e-9e4f-a91c3b8e3208"'
             sleep 10            
             puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'        
             puppet.codeDeploy 'development'
