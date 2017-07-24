@@ -60,6 +60,7 @@ node {
         } 
     }
     stage('Post') {
+      sh   '/var/lib/jenkins/workspace/Pipeline/isitup.sh'
       gitlabCommitStatus {
         sh 'echo "Post"'
       }          
