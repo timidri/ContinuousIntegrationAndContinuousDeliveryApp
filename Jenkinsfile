@@ -32,7 +32,10 @@ node {
     }
     stage('Results') {
         try{
+            // Create jar
             archive 'target/*.jar'
+            // Create RPM
+            sh   '/var/lib/jenkins/workspace/Pipeline/runDeployment.sh'            
             gitlabCommitStatus {
               sh 'echo "Results"'
             }             
@@ -43,7 +46,9 @@ node {
     }
     stage('Deployment') {
         try{
-            sh   '/var/lib/jenkins/workspace/Pipeline/runDeployment.sh'
+            // Run Puppet on test machine to get latest code
+            puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'        
+            puppet.codeDeploy 'development'
             gitlabCommitStatus {
               sh 'echo "Deployment"'
             }              
@@ -53,7 +58,6 @@ node {
         } 
     }
     stage('Post') {
-      puppet.job 'production', query: 'nodes { certname = "centos-7-2.pdx.puppet.vm" }'        
       gitlabCommitStatus {
         sh 'echo "Post"'
       }          
