@@ -32,7 +32,10 @@ node {
     }
     stage('Results') {
         try{
+            // Create jar
             archive 'target/*.jar'
+            // Create RPM
+            sh   '/var/lib/jenkins/workspace/Pipeline/runDeployment.sh'            
             gitlabCommitStatus {
               sh 'echo "Results"'
             }             
@@ -43,7 +46,11 @@ node {
     }
     stage('Deployment') {
         try{
-            sh   '/var/lib/jenkins/workspace/Pipeline/runDeployment.sh'
+            // Run Puppet on test machine to get latest code
+            sh 'source /var/lib/jenkins/.openstack_snapshotrc;nova rebuild --poll "895e732e-3f32-4d6c-8cc2-481f6bf03f78" "d9553b4f-b4f8-483e-9e4f-a91c3b8e3208"'
+            sleep 10            
+            puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'        
+            puppet.codeDeploy 'development'
             gitlabCommitStatus {
               sh 'echo "Deployment"'
             }              
@@ -53,7 +60,7 @@ node {
         } 
     }
     stage('Post') {
-      puppet.job 'production', query: 'nodes { certname = "centos-7-2.pdx.puppet.vm" }'        
+      sh   '/var/lib/jenkins/workspace/Pipeline/isitup.sh'
       gitlabCommitStatus {
         sh 'echo "Post"'
       }          
