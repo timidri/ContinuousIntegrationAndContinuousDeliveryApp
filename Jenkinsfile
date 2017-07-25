@@ -11,6 +11,9 @@ node {
     stage('Test') {
         try {
             sh "'${mvnHome}/bin/mvn' test"
+            sh '/var/lib/jenkins/workspace/Pipeline/dockerDeployment.sh' 
+            sleep 2 
+            sh '/var/lib/jenkins/workspace/Pipeline/isdockerwebserverup.sh'            
             gitlabCommitStatus {
               sh 'echo "Test"'
             }            
@@ -49,8 +52,9 @@ node {
             // Run Puppet on test machine to get latest code
             sh 'source /var/lib/jenkins/.openstack_snapshotrc;nova rebuild --poll "895e732e-3f32-4d6c-8cc2-481f6bf03f78" "d9553b4f-b4f8-483e-9e4f-a91c3b8e3208"'
             sleep 10            
-            puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'        
+            // Puppet Pipeline Plugin magic
             puppet.codeDeploy 'development'
+            puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'        
             gitlabCommitStatus {
               sh 'echo "Deployment"'
             }              
@@ -60,7 +64,7 @@ node {
         } 
     }
     stage('Post') {
-      sh   '/var/lib/jenkins/workspace/Pipeline/isitup.sh'
+      sh   '/var/lib/jenkins/workspace/Pipeline/isvmwebserverup.sh'
       gitlabCommitStatus {
         sh 'echo "Post"'
       }          
