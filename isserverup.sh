@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-SERVER=centos-7-3.pdx.puppet.vm
-PORT=8090
+SERVER=$1
+PORT=$2
 state=`nmap -p $PORT $SERVER | grep "$PORT" | grep open`
 if [ -z "$state" ]; then
   echo "Connection to $SERVER on port $PORT has failed"
@@ -8,3 +8,4 @@ if [ -z "$state" ]; then
 else
   echo "Connection to $SERVER on port $PORT was successful"
 fi
+
