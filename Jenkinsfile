@@ -2,6 +2,7 @@ node {
     puppet.credentials 'puppet-access-token'
     def mvnHome
     stage('Preparation') { // for display purposes
+        sh   '${WORKSPACE}/cleanup-docker.sh'
         git 'git@gitlab.inf.puppet.vm:puppet/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
         gitlabCommitStatus {
@@ -36,7 +37,7 @@ node {
             // Create jar
             archive 'target/*.jar'
             // Create RPM
-            sh   '/var/lib/jenkins/workspace/Pipeline/deployRPM.sh'
+            sh   '${WORKSPACE}/deployRPM.sh'
             gitlabCommitStatus {
               sh 'echo "Results"'
             }
@@ -47,9 +48,9 @@ node {
     }
     stage('Docker Acceptance Tests') {
         try {
-            sh '/var/lib/jenkins/workspace/Pipeline/dockerDeployment.sh'
+            sh '${WORKSPACE}/dockerDeployment.sh'
             sleep 2
-            sh '/var/lib/jenkins/workspace/Pipeline/isserverup.sh localhost 8090'
+            sh '${WORKSPACE}/isserverup.sh localhost 8090'
             gitlabCommitStatus {
               sh 'echo "Test"'
             }
@@ -76,7 +77,7 @@ node {
     }
     stage('Post') {
       sleep 2
-      //sh '/var/lib/jenkins/workspace/Pipeline/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
+      //sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       //sh '/bin/nmap -p 8090 centos-7-3.pdx.puppet.vm | grep 8090 | grep open'
       sh 'echo "The build is done!"'
       gitlabCommitStatus {
