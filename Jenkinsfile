@@ -49,8 +49,8 @@ node {
     stage('Docker Acceptance Tests') {
         try {
             sh '${WORKSPACE}/dockerDeployment.sh'
-            sleep 2
-            sh '${WORKSPACE}/isserverup.sh localhost 8090'
+//            sleep 2
+//            sh '${WORKSPACE}/isserverup.sh localhost 8090'
             gitlabCommitStatus {
               sh 'echo "Test"'
             }
@@ -74,7 +74,7 @@ node {
     }
     stage('Post') {
       sleep 2
-      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
+//      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
       gitlabCommitStatus {
         sh 'echo "Post"'
