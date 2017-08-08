@@ -72,6 +72,13 @@ node {
 //      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
 //      githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Build Finished',  status: 'SUCCESS'        
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Done", state: "SUCCESS"]] ]
+  ]);
     }
     notifyStarted("All is well! Your code is tested,built,and deployed.")
 }
