@@ -61,9 +61,6 @@ node {
     }
     stage('Prod Deployment') {
         try{
-            // Run Puppet on test machine to get latest code
-            sh 'source /var/lib/jenkins/.openstack_snapshotrc;nova rebuild --poll "895e732e-3f32-4d6c-8cc2-481f6bf03f78" "d9553b4f-b4f8-483e-9e4f-a91c3b8e3208"'
-            sleep 10
             // Puppet Pipeline Plugin magic
             puppet.codeDeploy 'development'
             puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'
@@ -77,8 +74,7 @@ node {
     }
     stage('Post') {
       sleep 2
-      //sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
-      //sh '/bin/nmap -p 8090 centos-7-3.pdx.puppet.vm | grep 8090 | grep open'
+      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
       gitlabCommitStatus {
         sh 'echo "Post"'

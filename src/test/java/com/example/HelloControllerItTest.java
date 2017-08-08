@@ -1,6 +1,6 @@
 package com.example;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 import java.net.URL;
@@ -40,7 +40,7 @@ public class HelloControllerItTest {
     public void getHello() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(),
                 String.class);
-        assertThat(response.getBody(), equalTo("<h1>Hello Abir Majumdar</h1>"));
+        assertThat(response.getBody(), startsWith("<h1>Hello World"));
     }
 
 }
