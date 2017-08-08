@@ -3,7 +3,7 @@ node {
     def mvnHome
     stage('Preparation') { // for display purposes
         sh   '${WORKSPACE}/cleanup-docker.sh'
-        git 'git@gitlab.inf.puppet.vm:puppet/ContinuousIntegrationAndContinuousDeliveryApp.git'
+        git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
         gitlabCommitStatus {
           sh 'echo "Preparation"'
