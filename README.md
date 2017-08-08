@@ -1,4 +1,4 @@
 # ContinuousIntegrationAndContinuousDeliveryApp
-Fork of [https://github.com/onedaywillcome1/ContinuousIntegrationAndContinuousDeliveryApp](https://github.com/onedaywillcome1/ContinuousIntegrationAndContinuousDeliveryApp)
+Example Java app and Jenkins workflow
 
-Quick Edit
+Initial fork from [https://github.com/onedaywillcome1/ContinuousIntegrationAndContinuousDeliveryApp](https://github.com/onedaywillcome1/ContinuousIntegrationAndContinuousDeliveryApp)
