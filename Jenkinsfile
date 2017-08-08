@@ -5,17 +5,13 @@ node {
         sh   '${WORKSPACE}/cleanup-docker.sh'
         git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
-        gitlabCommitStatus {
-          sh 'echo "Preparation"'
-        }
+        githubNotify credentialsId: puppet-github-maju6406, description: 'Preparing',  status: 'PENDING'        
         mvnHome = tool 'M2'
     }
     stage('Unit Tests') {
         try {
             sh "'${mvnHome}/bin/mvn' test"
-            gitlabCommitStatus {
-              sh 'echo "Unit Test"'
-            }
+            githubNotify credentialsId: puppet-github-maju6406, description: 'Unit Tests',  status: 'PENDING'        
         } catch (e) {
             notifyStarted("Unit Tests Failed in Jenkins!")
             throw e
@@ -24,9 +20,7 @@ node {
     stage('Build') {
         try {
             sh "'${mvnHome}/bin/mvn' clean package -DskipTests"
-            gitlabCommitStatus {
-              sh 'echo "Build"'
-            }
+            githubNotify credentialsId: puppet-github-maju6406, description: 'Build',  status: 'PENDING'        
         }catch (e) {
             notifyStarted("Build Failed in Jenkins!")
             throw e
@@ -38,9 +32,7 @@ node {
             archive 'target/*.jar'
             // Create RPM
             sh   '${WORKSPACE}/deployRPM.sh'
-            gitlabCommitStatus {
-              sh 'echo "Results"'
-            }
+            githubNotify credentialsId: puppet-github-maju6406, description: 'Package',  status: 'PENDING'        
         }catch (e) {
             notifyStarted("Packaging Failed in Jenkins!")
             throw e
@@ -51,9 +43,7 @@ node {
             sh '${WORKSPACE}/dockerDeployment.sh'
 //            sleep 2
 //            sh '${WORKSPACE}/isserverup.sh localhost 8090'
-            gitlabCommitStatus {
-              sh 'echo "Test"'
-            }
+            githubNotify credentialsId: puppet-github-maju6406, description: 'Docker Acceptance Tests',  status: 'PENDING'        
         } catch (e) {
             notifyStarted("Tests Failed in Jenkins!")
             throw e
@@ -64,9 +54,7 @@ node {
             // Puppet Pipeline Plugin magic
             puppet.codeDeploy 'development'
             puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'
-            gitlabCommitStatus {
-              sh 'echo "Deployment"'
-            }
+            githubNotify credentialsId: puppet-github-maju6406, description: 'Prod Deployment',  status: 'PENDING'        
         }catch (e) {
             notifyStarted("Deployment Failed in Jenkins!")
             throw e
@@ -76,9 +64,7 @@ node {
       sleep 2
 //      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
-      gitlabCommitStatus {
-        sh 'echo "Post"'
-      }
+      githubNotify credentialsId: puppet-github-maju6406, description: 'Build Finished',  status: 'SUCCESS'        
     }
     notifyStarted("All is well! Your code is tested,built,and deployed.")
 }
