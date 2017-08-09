@@ -5,7 +5,7 @@ node {
         sh   '${WORKSPACE}/cleanup-docker.sh'
         git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
-//        githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Preparing',  status: 'PENDING'        
+        githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Preparing',  status: 'PENDING'        
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
@@ -68,10 +68,10 @@ node {
         }
     }
     stage('Post') {
-      sleep 2
+//      sleep 2
 //      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
-//      githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Build Finished',  status: 'SUCCESS'        
+      githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Build Finished',  status: 'SUCCESS'        
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
