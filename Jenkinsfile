@@ -6,14 +6,17 @@ node {
         git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
 //        githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Preparing',  status: 'PENDING'        
-        githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Preparing', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'PENDING'
-  step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Preparing Message", state: "PENDING"]] ]
-  ]);
+//        githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Preparing', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'PENDING'
+//  step([
+//      $class: "GitHubCommitStatusSetter",
+//      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
+//      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+//      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+//      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Preparing Message", state: "PENDING"]] ]
+//  ]);
+//step([$class: 'GitHubSetCommitStatusBuilder', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'TSE-Jenkins']])
+step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Pending', state: 'PENDING']]]])
+
         mvnHome = tool 'M2'
     }
     stage('Unit Tests') {
@@ -73,14 +76,16 @@ node {
 //      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
 //      githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Build Finished',  status: 'SUCCESS'        
-      githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Build Finished', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'SUCCESS'        
-   step([
-      $class: "GitHubCommitStatusSetter",
-      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
-      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Done", state: "SUCCESS"]] ]
-  ]);
+//      githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Build Finished', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'SUCCESS'        
+//   step([
+//      $class: "GitHubCommitStatusSetter",
+//      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp"],
+//      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+//      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+//      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: "Done", state: "SUCCESS"]] ]
+//  ]);
+step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'Success', state: 'SUCCESS']]]])
+        
     }
     notifyStarted("All is well! Your code is tested,built,and deployed.")
 }
