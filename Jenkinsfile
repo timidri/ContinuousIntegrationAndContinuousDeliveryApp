@@ -53,7 +53,7 @@ step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'Conditio
         try {
             sh '${WORKSPACE}/dockerDeployment.sh'
             sleep 2
-            sh '${WORKSPACE}/isserverup.sh localhost 8090'
+//            sh '${WORKSPACE}/isserverup.sh localhost 8090'
 //            githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Docker Acceptance Tests',  status: 'PENDING'        
         } catch (e) {
             notifyStarted("Tests Failed in Jenkins!")
@@ -73,7 +73,7 @@ step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'Conditio
     }
     stage('Post') {
       sleep 2
-      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
+//      sh '${WORKSPACE}/isserverup.sh centos-7-3.pdx.puppet.vm 8090'
       sh 'echo "The build is done!"'
 //      githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Build Finished',  status: 'SUCCESS'        
 //      githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Build Finished', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'SUCCESS'        
