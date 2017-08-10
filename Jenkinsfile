@@ -2,9 +2,9 @@ node {
     puppet.credentials 'puppet-access-token'
     def mvnHome
     stage('Preparation') { // for display purposes
-        sh   '${WORKSPACE}/cleanup-docker.sh'
         git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
         sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
+        sh   '${WORKSPACE}/cleanup-docker.sh'
 //        githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Preparing',  status: 'PENDING'        
 //        githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Preparing', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'PENDING'
 //  step([
