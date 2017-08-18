@@ -3,7 +3,7 @@ node {
     def mvnHome
     stage('Preparation') { // for display purposes
         git 'https://github.com/maju6406/ContinuousIntegrationAndContinuousDeliveryApp.git'
-        sh 'cd deployment/ && rm -rf control-repo && git clone  -b development git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
+        sh 'cd deployment/ && rm -rf control-repo && git clone  -b production git@gitlab.inf.puppet.vm:puppet/control-repo.git && sed -ie \'$d\' control-repo/environment.conf && cd ..'
         sh   '${WORKSPACE}/cleanup-docker.sh'
 //        githubNotify credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp", description: 'Preparing',  status: 'PENDING'        
 //        githubNotify account: 'maju6406', context: 'TSE Jenkins', credentialsId: '70878517-f286-4149-9f6f-ffb4e8648d29', description: 'Preparing', repo: 'ContinuousIntegrationAndContinuousDeliveryApp', status: 'PENDING'
@@ -63,8 +63,8 @@ step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'Conditio
     stage('Prod Deployment') {
         try{
             // Puppet Pipeline Plugin magic
-            puppet.codeDeploy 'development'
-            puppet.job 'development', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'
+            puppet.codeDeploy 'production'
+            puppet.job 'production', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'
 //            githubNotif credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp",  description: 'Prod Deployment',  status: 'PENDING'        
         }catch (e) {
             notifyStarted("Deployment Failed in Jenkins!")
