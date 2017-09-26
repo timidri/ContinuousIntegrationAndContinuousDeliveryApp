@@ -15,7 +15,7 @@ RUN yum update -y && \
     yum clean all
 
 COPY Puppetfile /Puppetfile
-COPY control-repo/ /etc/puppetlabs/code/environments/production/
+COPY tse-control-repo-jenkinswork/ /etc/puppetlabs/code/environments/production/
 # Removing unneeded metadata.json
 RUN rm -rf /etc/puppetlabs/code/environments/production/site/profile/metadata.json
 RUN /opt/puppetlabs/puppet/bin/r10k puppetfile install --moduledir /etc/puppetlabs/code/modules
