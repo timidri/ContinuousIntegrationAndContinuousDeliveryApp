@@ -64,7 +64,7 @@ step([$class: 'GitHubCommitStatusSetter', statusResultSource: [$class: 'Conditio
         try{
             // Puppet Pipeline Plugin magic
             puppet.codeDeploy 'production'
-            puppet.job 'production', query: 'nodes { certname = "centos-7-3.pdx.puppet.vm" }'
+            puppet.job 'production', query: 'nodes { certname ~ "centos-7-3" }'
 //            githubNotif credentialsId: 'puppet-github-up', account: "maju6406", repo: "ContinuousIntegrationAndContinuousDeliveryApp",  description: 'Prod Deployment',  status: 'PENDING'        
         }catch (e) {
             notifyStarted("Deployment Failed in Jenkins!")
