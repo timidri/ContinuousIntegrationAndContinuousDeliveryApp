@@ -20,7 +20,7 @@ maju6406/jenkinsapp:
     ### End Docker Build Commands ###
 
   PkgInclude:
-    - '*'
+    - './target/*.jar'
 
   PreInstall:
     - echo "DD_USERNAME- $DISTELLI_DOCKER_USERNAME"
