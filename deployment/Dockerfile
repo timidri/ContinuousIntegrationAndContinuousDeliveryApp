@@ -16,6 +16,7 @@ RUN yum update -y && \
 
 COPY Puppetfile /Puppetfile
 RUN rm -rf tse-control-repo-jenkinswork && git clone -b production https://github.com/maju6406/tse-control-repo-jenkinswork.git tse-control-repo-jenkinswork
+RUN ls .
 COPY tse-control-repo-jenkinswork/ /etc/puppetlabs/code/environments/production/
 # Removing unneeded metadata.json
 RUN rm -rf /etc/puppetlabs/code/environments/production/site/profile/metadata.json
