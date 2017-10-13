@@ -17,12 +17,13 @@ RUN yum update -y && \
 COPY Puppetfile /Puppetfile
 RUN rm -rf tse-control-repo-jenkinswork && git clone -b production https://github.com/maju6406/tse-control-repo-jenkinswork.git tse-control-repo-jenkinswork
 RUN ls .
+RUN pwd
+COPY manifests /manifests
 COPY tse-control-repo-jenkinswork /etc/puppetlabs/code/environments/production/
 # Removing unneeded metadata.json
 RUN rm -rf /etc/puppetlabs/code/environments/production/site/profile/metadata.json
 RUN /opt/puppetlabs/puppet/bin/r10k puppetfile install --moduledir /etc/puppetlabs/code/modules
 
-COPY manifests /manifests
 RUN yum update -y && \
 #    /opt/puppetlabs/bin/puppet module list --tree && \
     FACTER_hostname=jenkins-docker-webapp /opt/puppetlabs/bin/puppet apply -e "class{ 'profile::app::java_helloworld':  src_rpm => 'http://192.168.0.101/artifacts/helloworldjavaapp-latest.rpm', install_service => false}" --verbose --show_diff --summarize  --app_management && \
