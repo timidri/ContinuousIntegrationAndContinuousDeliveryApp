@@ -35,7 +35,7 @@ maju6406/jenkinsapp:
     - publicip=$(curl -s ident.me) 
     #- echo "Public IP $publicip"
     - echo ""
-    - 'echo "You can validate the install by pointing your browser at http://$publicip:8090/SimpleTomcatWebApp"'
+    - 'echo "You can validate the install by pointing your browser at http://$publicip:8090/"'
     - echo ""
 
   Exec:
