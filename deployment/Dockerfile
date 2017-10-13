@@ -23,7 +23,7 @@ RUN /opt/puppetlabs/puppet/bin/r10k puppetfile install --moduledir /etc/puppetla
 
 RUN yum update -y && \
 #    /opt/puppetlabs/bin/puppet module list --tree && \
-    FACTER_hostname=jenkins-docker-webapp /opt/puppetlabs/bin/puppet apply -e "class{ 'profile::app::java_helloworld':  src_rpm => 'http://192.168.0.101/artifacts/helloworldjavaapp-latest.rpm', install_service => false}" --verbose --show_diff --summarize  --app_management && \
+    FACTER_hostname=jenkins-docker-webapp /opt/puppetlabs/bin/puppet apply -e "class{ 'profile::app::java_helloworld':  src_rpm => 'http://shundor.com/helloworldjavaapp-latest.rpm', install_service => false}" --verbose --show_diff --summarize  --app_management && \
     yum clean all
 
 LABEL com.puppet.inventory="/inventory.json"
