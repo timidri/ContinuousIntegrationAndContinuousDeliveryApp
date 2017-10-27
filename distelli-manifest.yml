@@ -23,6 +23,7 @@ maju6406/jenkinsapp:
 
   PkgInclude:
     - './target/*.jar'
+    - './deployment/BUILD_NUMBER'    
 
   PreInstall:
     - echo "DD_USERNAME- $DISTELLI_DOCKER_USERNAME"
