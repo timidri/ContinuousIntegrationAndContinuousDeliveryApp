@@ -4,8 +4,7 @@ ENV PUPPET_AGENT_VERSION="1.8.2" R10K_VERSION="2.2.2"
 
 ARG BUILDNUM="no_build_number"
 RUN echo "Oh dang look at that $BUILDNUM"
-RUN echo $DISTELLI_BUILDNUM
-RUN echo $BUILDNUM > /opt/helloworldjavaapp/BUILD_NUMBER
+COPY BUILD_NUMBER /opt/helloworldjavaapp/BUILD_NUMBER
 RUN echo /opt/helloworldjavaapp/BUILD_NUMBER
 RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm && \
     yum upgrade -y && \
