@@ -3,9 +3,7 @@ FROM centos
 ENV PUPPET_AGENT_VERSION="1.8.2" R10K_VERSION="2.2.2" 
 
 ARG BUILDNUM="no_build_number"
-RUN echo "Oh dang look at that $BUILDNUM"
-COPY BUILD_NUMBER /opt/helloworldjavaapp/BUILD_NUMBER
-RUN cat /opt/helloworldjavaapp/BUILD_NUMBER
+RUN echo "Distelli Build Number: $BUILDNUM"
 RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm && \
     yum upgrade -y && \
     yum update -y && \
@@ -29,6 +27,9 @@ RUN yum update -y && \
 #    /opt/puppetlabs/bin/puppet module list --tree && \
     FACTER_hostname=jenkins-docker-webapp /opt/puppetlabs/bin/puppet apply -e "class{ 'profile::app::java_helloworld':  src_rpm => 'http://shundor.com/helloworldjavaapp-latest.rpm', install_service => false}" --verbose --show_diff --summarize  --app_management && \
     yum clean all
+
+COPY BUILD_NUMBER /opt/helloworldjavaapp/BUILD_NUMBER
+RUN cat /opt/helloworldjavaapp/BUILD_NUMBER
 
 LABEL com.puppet.inventory="/inventory.json"
 RUN /opt/puppetlabs/bin/puppet module install puppetlabs-inventory && \
