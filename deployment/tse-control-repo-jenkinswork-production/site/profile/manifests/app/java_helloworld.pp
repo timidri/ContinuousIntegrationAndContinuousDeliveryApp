@@ -12,11 +12,11 @@ class profile::app::java_helloworld (
     url    => 'https://s3.amazonaws.com/saleseng/files/oracle/jdk-8u151-linux-x64.rpm',
   }
 
-  # Install RPM
-  package { 'helloworldjavaapp':
-    ensure          => 'latest',
-    provider        => 'rpm',
-    source          => $src_rpm,
-  }
+#  # Install RPM
+#  package { 'helloworldjavaapp':
+#    ensure          => 'latest',
+#    provider        => 'rpm',
+#    source          => $src_rpm,
+#  }
 
 }
