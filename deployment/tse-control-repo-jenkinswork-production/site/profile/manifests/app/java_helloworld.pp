@@ -13,10 +13,10 @@ class profile::app::java_helloworld (
   }
 
   # Install RPM
-  package { 'helloworldjavaapp':
-    ensure          => 'latest',
-    provider        => 'rpm',
-    source          => $src_rpm,
-  }
+#  package { 'helloworldjavaapp':
+#    ensure          => 'latest',
+#    provider        => 'rpm',
+#    source          => $src_rpm,
+#  }
 
 }
