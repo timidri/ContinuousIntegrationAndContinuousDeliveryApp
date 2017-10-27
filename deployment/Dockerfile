@@ -28,6 +28,7 @@ RUN yum update -y && \
     FACTER_hostname=jenkins-docker-webapp /opt/puppetlabs/bin/puppet apply -e "class{ 'profile::app::java_helloworld':  src_rpm => 'http://shundor.com/helloworldjavaapp-latest.rpm', install_service => false}" --verbose --show_diff --summarize  --app_management && \
     yum clean all
 
+COPY continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar /opt/helloworldjavaapp/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar
 COPY BUILD_NUMBER /opt/helloworldjavaapp/BUILD_NUMBER
 RUN cat /opt/helloworldjavaapp/BUILD_NUMBER
 
