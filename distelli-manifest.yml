@@ -14,6 +14,7 @@ maju6406/jenkinsapp:
     - echo "DD_BUILDNUM- $DISTELLI_BUILDNUM"    
     - echo $DISTELLI_BUILDNUM > ./deployment/BUILD_NUMBER
     - mvn clean package
+    - cp ./target/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar ./deployment/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar    
     ### Docker Build Commands ###
     - docker login -u "$DISTELLI_DOCKER_USERNAME" -p "$DISTELLI_DOCKER_PW" -e "$DISTELLI_DOCKER_EMAIL" $DISTELLI_DOCKER_ENDPOINT
     - docker build --quiet=false --build-arg BUILDNUM="$DISTELLI_BUILDNUM" -t "$DISTELLI_DOCKER_REPO" $DISTELLI_DOCKER_PATH
