@@ -1,4 +1,4 @@
-FROM puppetseteam/demobase
+FROM puppetseteam/demobase:1
 
 ARG BUILDNUM="no_build_number"
 RUN echo "Distelli Build Number: $BUILDNUM"
