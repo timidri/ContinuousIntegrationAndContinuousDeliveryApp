@@ -1,4 +1,5 @@
-FROM puppetseteam/demobase:1
+#FROM puppetseteam/demobase:1
+FROM openjdk:jdk-alpine
 
 ARG BUILDNUM="no_build_number"
 RUN echo "Distelli Build Number: $BUILDNUM"
