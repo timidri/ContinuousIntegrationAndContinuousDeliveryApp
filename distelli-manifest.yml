@@ -7,8 +7,8 @@ timidri/demoapp:
     - PORT: "8090"
 
   Build:
-    - ls -l /
-    - ls -l /build
+    #- ls -l /
+    #- ls -l /build
     - echo "DD_USERNAME- $DISTELLI_DOCKER_USERNAME"
     - echo "DD_EMAIL-    $DISTELLI_DOCKER_EMAIL"
     - echo "DD_ENDPOINT- $DISTELLI_DOCKER_ENDPOINT"
