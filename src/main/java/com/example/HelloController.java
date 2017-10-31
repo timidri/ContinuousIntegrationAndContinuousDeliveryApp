@@ -15,7 +15,7 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-      String bodyContent = "<h1>Hello World And Universe</h1>";
+      String bodyContent = "<h1>Hello World And Multiverse</h1>";
       
       try {
         File f = new File("/opt/helloworldjavaapp/BUILD_NUMBER");
