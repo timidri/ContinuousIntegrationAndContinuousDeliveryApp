@@ -9,6 +9,8 @@ timidri/demoapp:
   Build:
     #- ls -l /
     #- ls -l /build
+    - whoami
+    - echo $PATH
     - echo "DD_USERNAME- $DISTELLI_DOCKER_USERNAME"
     - echo "DD_EMAIL-    $DISTELLI_DOCKER_EMAIL"
     - echo "DD_ENDPOINT- $DISTELLI_DOCKER_ENDPOINT"
