@@ -7,11 +7,16 @@ timidri/demoapp:
     - PORT: "8090"
 
   Build:
+    - ls -l /
+    - ls -l /build
+    - exit
     - echo "DD_USERNAME- $DISTELLI_DOCKER_USERNAME"
     - echo "DD_EMAIL-    $DISTELLI_DOCKER_EMAIL"
     - echo "DD_ENDPOINT- $DISTELLI_DOCKER_ENDPOINT"
     - echo "DD_PORTS-    $DISTELLI_DOCKER_PORTS"
     - echo "DD_BUILDNUM- $DISTELLI_BUILDNUM"    
+    - echo "DD_REPO- $DISTELLI_DOCKER_REPO"    
+    - echo "DD_PATH- $DISTELLI_DOCKER_PATH"    
     - echo $DISTELLI_BUILDNUM > ./deployment/BUILD_NUMBER
     - mvn clean package
     - cp ./target/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar ./deployment/continuousintegrationandcontinuousdeliveryapp-0.0.7-SNAPSHOT.jar    
