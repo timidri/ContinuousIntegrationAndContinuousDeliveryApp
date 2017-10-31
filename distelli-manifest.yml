@@ -1,4 +1,4 @@
-maju6406/jenkinsapp:
+timidri/demoapp:
 
   Env:
     # Set the below environment variables for your environment
